@@ -300,7 +300,7 @@
 - **十字链表**
 - **邻接多重表**
 
+![](https://github.com/katoluo/DataStructures/raw/master/Graph/images/CodeCogsEqn.png)
 
 
-![](http://latex.codecogs.com/svg.latex?A[i][j]&space;=&space;\begin{cases}1,&space;&&space;\text{ooooo}&space;\\0,&space;&&space;\text{hhhhh}\end{cases}&space;)
 
