@@ -300,7 +300,9 @@
 - **十字链表**
 - **邻接多重表**
 
-![](http://latex.codecogs.com/svg.latex?A[i][j]&space;=&space;\begin{cases}1,&space;&&space;\text{if&space;<$v_i$,$v_j$&space;>&space;or&space;($v_i$,$v_j$)&space;$\epsilon$&space;E}&space;\\0,&space;&&space;\text{else&space;if}\end{cases})
-
-
+![](https://latex.codecogs.com/gif.latex?A[i][j]=
+	\begin{cases}
+		1, & \text{if ($v_i$, $v_j$) $\epsilon$ $E$ }\\
+		0, & \text{else if}
+	\end{cases})
 
