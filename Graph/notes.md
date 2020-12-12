@@ -184,7 +184,7 @@
 >
 > 若G是网，则邻接矩阵可以定义为：
 >
-> ![latex]()
+> ![latex](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex02.png)
 > $$
 > A[i][j] = 
 > \begin{cases}
@@ -285,6 +285,8 @@
 > - 不便于统计边的数目，需要扫描邻接矩阵所有元素才能统计完毕，时间复杂度($n^2$)
 >
 > ![](https://latex.codecogs.com/svg.latex?\lim_{x%20\to%200}%20f(x)%20=%208)
+>
+> ![](https://latex.codecogs.com/svg.latex?\dpi{500}\begin{cases} 0 \\ 1\end{cases})
 
 - **邻接表**
 - **十字链表**
