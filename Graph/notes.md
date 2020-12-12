@@ -299,3 +299,8 @@
 - **邻接表**
 - **十字链表**
 - **邻接多重表**
+
+![](http://latex.codecogs.com/svg.latex?A[i][j]&space;=&space;\begin{cases}1,&space;&&space;\text{if&space;<$v_i$,$v_j$&space;>&space;or&space;($v_i$,$v_j$)&space;$\epsilon$&space;E}&space;\\0,&space;&&space;\text{else&space;if}\end{cases})
+
+
+
