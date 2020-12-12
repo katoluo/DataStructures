@@ -180,11 +180,11 @@
 
 > 邻接矩阵是表示顶点之间相邻关系的矩阵。设G（*V*，*E*）是具有**n**个顶点的图，则G的邻接矩阵是具有如下性质的**n**阶方针：
 > 
-> ![latex01](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex01.png)
+> ![latex05](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex05.png)
 > 
 > 若G是网，则邻接矩阵可以定义为：
 > 
-> ![latex02](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex02.png)
+> ![latex04](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex04.png)
 > 
 > 例如：
 >
