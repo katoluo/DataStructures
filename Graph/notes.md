@@ -179,6 +179,14 @@
 **1. 邻接矩阵（Adjacency Matrix）表示法**
 
 > 邻接矩阵是表示顶点之间相邻关系的矩阵。设G（*V*，*E*）是具有**n**个顶点的图，则G的邻接矩阵是具有如下性质的**n**阶方针：
+> $$
+> A[i][j] = 
+> 	\begin{cases}
+> 		1, & \text{若<$v_i$,$v_j$>或($v_i$,$v_j$) $\epsilon$ E} \\
+> 		0, & \text{反之}
+> 	\end{cases}
+> $$
+> 
 >
 > ![latex01](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex01.png)
 >
