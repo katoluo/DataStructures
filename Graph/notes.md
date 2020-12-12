@@ -132,14 +132,8 @@
 
 > 邻接矩阵是表示顶点之间相邻关系的矩阵。设G（*V*，*E*）是具有**n**个顶点的图，则G的邻接矩阵是具有如下性质的**n**阶方针：
 >
-> ![](http://latex.codecogs.com/png.latex?A[i][j] = \begin{cases}1 & if <v_i,v_j> or (v_i,v_j) \epsilon E \\ 0 & else \  if\end{cases})
-> $$
-> A[i][j] = 
-> \begin{cases}
-> 1 & 若<v_i,v_j>或(v_i,v_j)\epsilon E \\
-> 0 & 反之
-> \end{cases}
-> $$
+> ![latex01](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex01.png)
+> 
 > ​	**例如：**
 > $$
 > \left[
@@ -151,14 +145,14 @@
 > \end{matrix}
 > \right]
 > $$
->
->
+> 
+> 
 > 若G是网，则邻接矩阵可以定义为：
 > $$
 > A[i][j] = 
 > \begin{cases}
-> w_i,_j & 若<v_i,v_j>或(v_i,v_j) \epsilon E \\
-> \infty & 反之
+>w_i,_j & 若<v_i,v_j>或(v_i,v_j) \epsilon E \\
+>\infty & 反之
 > \end{cases}
 > $$
 > ​		**例如：**
@@ -172,43 +166,43 @@
 > \end{matrix}
 > \right]
 > $$
->
->
+> 
+> 
 > 其中，$w_i,_j$ 表示边上的权值；$\infty$ 表示计算机允许的、大于所有边上权值的数。
->
+> 
 > 用邻接矩阵表示法表示图，除了一个用于存储邻接矩阵的二维数组外，还需要用一个一维数组来存储顶点信息。其形式说明如下：
->
-> ```cpp
-> // --------图的邻接矩阵存储表示--------
+> 
+>```cpp
+>// --------图的邻接矩阵存储表示--------
 > #define MaxInt 32767 // 表示极大值，即无穷
-> #define MVNum 100 // 最大顶点数
+>#define MVNum 100 // 最大顶点数
 > typedef char VerTexType; // 假设顶点的数据类型为字符型
-> typedef int ArcType; // 假设边的权值类型为整型
+>typedef int ArcType; // 假设边的权值类型为整型
 > typedef struct
 > {
->  VerTexType vexs[MVNum]; // 顶点表
->  ArcType arcs[MVNum][MVNum]; // 邻接矩阵
->  int vexnum, arcnum; // 图的当前顶点数和边数
+> VerTexType vexs[MVNum]; // 顶点表
+> ArcType arcs[MVNum][MVNum]; // 邻接矩阵
+> int vexnum, arcnum; // 图的当前顶点数和边数
 > } AMGraph; 
 > ```
->
-> **采用邻接矩阵表示法创建无向网 (Undirected graph)**
->
-> 算法步骤：
->
+> 
+>  **采用邻接矩阵表示法创建无向网 (Undirected graph)**
+>  
+>  算法步骤：
+> 
 > - 输入总顶点数和总边数。
-> - 依次输入点的信息存入顶点表中。
+>- 依次输入点的信息存入顶点表中。
 > - 初始化邻接矩阵，使每个权值初始化为极大值。
-> - 构造邻接矩阵。依次输入每条边依附的顶点和其权值，确定两个顶点在图中的位置之后，使相应边赋予相应的权值，同时使其对称边赋予相同的权值。
->
-> 算法描述：
->
+>- 构造邻接矩阵。依次输入每条边依附的顶点和其权值，确定两个顶点在图中的位置之后，使相应边赋予相应的权值，同时使其对称边赋予相同的权值。
+> 
+>算法描述：
+> 
 > ```cpp
 > Status CreateUDN(AMGraph &G) // Undirected graph
 > { // 采用邻接矩阵表示法，创建无向网G
->     std::cin >> G.vexnum >> G.arcnum; // 输入总顶点数，总边数
+>    std::cin >> G.vexnum >> G.arcnum; // 输入总顶点数，总边数
 >     for (int i = 0; i != G.vexnum; ++i) // 依次输入点的信息
->         std::cin >> G.vexs[i];
+>        std::cin >> G.vexs[i];
 >     for (int i = 0; i != G.vexnum; ++i) // 初始化邻接矩阵，边的权值均置为极大值
 >         for (int j = 0; j != G.vexnum; ++j)
 >             G.arcs[i][j] = MaxInt;
@@ -225,10 +219,9 @@
 >     return OK;
 > }
 > ```
->
+> 
 > 
 
 - **邻接表**
 - **十字链表**
 - **邻接多重表**
-
