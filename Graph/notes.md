@@ -286,7 +286,7 @@
 >
 > ![](https://latex.codecogs.com/svg.latex?\lim_{x%20\to%200}%20f(x)%20=%208)
 >
-> ![](https://latex.codecogs.com/svg.latex?\dpi{500}\begin{cases} 0 \\ 1\end{cases})
+> ![](https://latex.codecogs.com/png.latex?\dpi{400}\int&space;\frac{1}{x}&space;dx&space;=&space;\ln&space;\left|&space;x&space;\right|&space;+&space;C)
 
 - **邻接表**
 - **十字链表**
