@@ -179,54 +179,23 @@
 **1. 邻接矩阵（Adjacency Matrix）表示法**
 
 > 邻接矩阵是表示顶点之间相邻关系的矩阵。设G（*V*，*E*）是具有**n**个顶点的图，则G的邻接矩阵是具有如下性质的**n**阶方针：
-> $$
-> A[i][j] = 
-> 	\begin{cases}
-> 		1, & \text{若<$v_i$,$v_j$>或($v_i$,$v_j$) $\epsilon$ E} \\
-> 		0, & \text{反之}
-> 	\end{cases}
-> $$
 > 
->
 > ![latex01](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex01.png)
->
+> 
 > 若G是网，则邻接矩阵可以定义为：
->
-> ![latex](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex02.png)
-> $$
-> A[i][j] = 
-> \begin{cases}
-> w_i,_j & 若<v_i,v_j>或(v_i,v_j) \epsilon E \\
-> \infty & 反之
-> \end{cases}
-> \\
-> 例如：---------------------------------
-> \\
-> \left[
-> \begin{matrix}
-> 0 & 1 & 1 & 0 \\
-> 0 & 0 & 0 & 0 \\
-> 0 & 0 & 0 & 0 \\
-> 1 & 0 & 0 & 0
-> \end{matrix}
-> \right]
 > 
-> \left[
-> \begin{matrix}
-> \infty & 5 & \infty & 7 & \infty & \infty \\
-> \infty & \infty & 4 & \infty & \infty & \infty \\
-> 8 & \infty & \infty & \infty & \infty & \infty \\
-> 1 & 2 & 3 & 5 & \infty & \infty
-> \end{matrix}
-> \right]
-> $$
+> ![latex02](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex02.png)
 > 
+> 例如：
 >
+> ![latex03](https://github.com/katoluo/DataStructures/raw/master/Graph/images/latex03.png)
+>
+> 
 >
 > 其中，$w_i,_j$ 表示边上的权值；$\infty$ 表示计算机允许的、大于所有边上权值的数。
->
+> 
 > 用邻接矩阵表示法表示图，除了一个用于存储邻接矩阵的二维数组外，还需要用一个一维数组来存储顶点信息。其形式说明如下：
->
+> 
 > ```cpp
 > // --------图的邻接矩阵存储表示--------
 > #define MaxInt 32767 // 表示极大值，即无穷
@@ -240,26 +209,26 @@
 > int vexnum, arcnum; // 图的当前顶点数和边数
 > } AMGraph; 
 > ```
->
+> 
 > **采用邻接矩阵表示法创建无向网 (Undirected graph)**
->
+> 
 > 算法步骤：
->
+> 
 > - 输入总顶点数和总边数。
 > - 依次输入点的信息存入顶点表中。
 > - 初始化邻接矩阵，使每个权值初始化为极大值。
 > - 构造邻接矩阵。依次输入每条边依附的顶点和其权值，确定两个顶点在图中的位置之后，使相应边赋予相应的权值，同时使其对称边赋予相同的权值。
->
+> 
 > 算法描述：
->
-> ```cpp
-> Status CreateUDN(AMGraph &G) // Undirected graph
+> 
+>```cpp
+>Status CreateUDN(AMGraph &G) // Undirected graph
 > { // 采用邻接矩阵表示法，创建无向网G
->     std::cin >> G.vexnum >> G.arcnum; // 输入总顶点数，总边数
+>    std::cin >> G.vexnum >> G.arcnum; // 输入总顶点数，总边数
 >     for (int i = 0; i != G.vexnum; ++i) // 依次输入点的信息
->         std::cin >> G.vexs[i];
+>       std::cin >> G.vexs[i];
 >     for (int i = 0; i != G.vexnum; ++i) // 初始化邻接矩阵，边的权值均置为极大值
->         for (int j = 0; j != G.vexnum; ++j)
+>        for (int j = 0; j != G.vexnum; ++j)
 >             G.arcs[i][j] = MaxInt;
 >     for (int k = 0; k != G.arcnum; ++k) // 构造邻接矩阵
 >     {
@@ -271,36 +240,34 @@
 >         G.arcs[i][j] = w; // 边v1-v2的权值置为w
 >         G.arcs[j][i] = G.arcs[i][j]; // 置对称边的权值为w
 >     }
->     return OK;
+>    return OK;
 > }
-> ```
->
-> 算法分析：
->
+>```
+> 
+>算法分析：
+> 
 > 该算法的时间复杂度是O($n^2$)。
->
+> 
 > **邻接矩阵表示法的优缺点**
->
+> 
 > (1) 优点
->
+> 
 > - 便于判断两个顶点之间是否右边，即根据A[i] [j] = 0 或 1 来判断
->
+> 
 > - 便于计算各个顶点的度。对于无向图，邻接矩阵第 $i$ 行元素之和就是顶点 $i$ 的度；对于有向图，第 $i$ 行元素之和就是顶点 $i$ 的出度，第 $i$ 列元素之和就是顶点 $i$ 的入度。
->
+> 
 > (2) 缺点
->
+> 
 > - 不便于增加和删除顶点。
 > - 不便于统计边的数目，需要扫描邻接矩阵所有元素才能统计完毕，时间复杂度($n^2$)
->
-> ![](https://latex.codecogs.com/svg.latex?\lim_{x%20\to%200}%20f(x)%20=%208)
->
-> ![](https://latex.codecogs.com/png.latex?\dpi{400}\int&space;\frac{1}{x}&space;dx&space;=&space;\ln&space;\left|&space;x&space;\right|&space;+&space;C)
+> 
+> 
 
 - **邻接表**
 - **十字链表**
 - **邻接多重表**
 
-![](https://github.com/katoluo/DataStructures/raw/master/Graph/images/CodeCogsEqn.png)
+
 
 
 
