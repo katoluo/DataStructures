@@ -131,6 +131,8 @@
 **1. 邻接矩阵（Adjacency Matrix）表示法**
 
 > 邻接矩阵是表示顶点之间相邻关系的矩阵。设G（*V*，*E*）是具有**n**个顶点的图，则G的邻接矩阵是具有如下性质的**n**阶方针：
+>
+> ![](http://latex.codecogs.com/png.latex?A[i][j] = \begin{cases}1 & if <v_i,v_j> or (v_i,v_j) \epsilon E \\ 0 & else \  if\end{cases})
 > $$
 > A[i][j] = 
 > \begin{cases}
@@ -149,7 +151,7 @@
 > \end{matrix}
 > \right]
 > $$
-> 
+>
 >
 > 若G是网，则邻接矩阵可以定义为：
 > $$
@@ -170,7 +172,7 @@
 > \end{matrix}
 > \right]
 > $$
-> 
+>
 >
 > 其中，$w_i,_j$ 表示边上的权值；$\infty$ 表示计算机允许的、大于所有边上权值的数。
 >
@@ -184,9 +186,9 @@
 > typedef int ArcType; // 假设边的权值类型为整型
 > typedef struct
 > {
->     VerTexType vexs[MVNum]; // 顶点表
->     ArcType arcs[MVNum][MVNum]; // 邻接矩阵
->     int vexnum, arcnum; // 图的当前顶点数和边数
+>  VerTexType vexs[MVNum]; // 顶点表
+>  ArcType arcs[MVNum][MVNum]; // 邻接矩阵
+>  int vexnum, arcnum; // 图的当前顶点数和边数
 > } AMGraph; 
 > ```
 >
@@ -229,3 +231,4 @@
 - **邻接表**
 - **十字链表**
 - **邻接多重表**
+
