@@ -286,6 +286,8 @@
 > - **表头结点表：** 由所有表头结点以顺序结构的形式存储，以便可以随机访问任 一 顶点的边链表。表头结点包括**数据域** (data) 和**链域** (firstarc) 两部分。其中，数据域用于存储顶点$v_i$的名称或其他有关信息；链域用于指向链表中第 一 个结点（即与顶点 $v_i$ 邻接的第 一 个邻接点）。
 > - **边表：** 边链表中边结点包括**邻接点域**（adjvex）、**数据域**（info）和**链域**（nextarc）三部分。其中，邻接点域指示与顶点$v_i$邻接的点在图中的位置；数据域存储和边相关的信息，如权值等；链域指示与顶点$v_i$邻接的下一条边的结点。
 >
+> 具体实现：[adjacency_list.h](https://github.com/katoluo/DataStructures/blob/master/Graph/code/adjacencylish/adjacency_lish.h)
+>
 > 
 >
 > **2. 采用邻接表表示法创建无向图**
@@ -298,7 +300,11 @@
 > - 一次输入点的信息存入顶点表中，使每个表头节点的指针域初始化为NULL。
 > - 创建邻接表。依次输入每条边依附的两个顶点，确定这两个顶点的序号$i$和$j$之后，将此边结点分别插入$v_i$和$v_j$对应的两个边链表的头部。
 >
+> 具体实现：[adjacency_lish.cpp](https://github.com/katoluo/DataStructures/blob/master/Graph/code/adjacencylish/adjacency_lish.cpp)
+>
 > 
+
+
 
 ### 十字链表
 
