@@ -2,11 +2,11 @@
 #define ADJACENCY_MULTILIST
 
 #define MAX_VERTEX_NUM 10
-typedef enum{unvisited, visited} VisitIf;
+//typedef enum{unvisited, visited} VisitIf;
 typedef char VertexType;
 typedef struct EdgeBox
 {
-  VisitIf mark; // 访问标记
+  //VisitIf mark; // 访问标记
   int ivex, jvex; // 该边依附的两个顶点的位置
   struct EdgeBox *ilink, *jlink; // 分别指向依附这两个顶点的下一条边
   //InfoType *info; // 该边信息指针
