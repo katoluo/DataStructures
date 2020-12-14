@@ -309,7 +309,7 @@
 
 >**十字链表**是有向图的另一种链式存储结构。可以看成是将有向图的邻接表和逆邻接表结合起来得到的一种链表。在十字链表中，对应于有向图中每一条弧有一个结点，对应于每个顶点也有一个结点。这些结点的结构如下图所示。
 >
->![orthogonal_lish01]()
+>![orthogonal_lish01](https://github.com/katoluo/DataStructures/raw/master/Graph/images/orthogonal_lish01.png)
 >
 >在弧结点中有五个域：其中尾域（**tailvex**）和头域（**headvex**）分别指示弧尾和弧头这两个顶点在图中的位置，链域（**hlink**）指向弧头相同的下一条弧，而链域（**tlink**）指向弧尾相同的下一条弧，**info**域指向该弧的相关信息。
 >
@@ -317,13 +317,13 @@
 >
 >十字链表例子表示，如下图：
 >
->![orthogonal_list02]()
+>![orthogonal_list02](https://github.com/katoluo/DataStructures/raw/master/Graph/images/orthogonal_list02.png)
 >
 >具体实现：
 >
->[orthogonal_list.h]()
+>[orthogonal_list.h](https://github.com/katoluo/DataStructures/blob/master/Graph/code/orthogonal/orthogonal_lish.h)
 >
->[orthogonal_list.cpp]()
+>[orthogonal_list.cpp](https://github.com/katoluo/DataStructures/blob/master/Graph/code/orthogonal/orthogonal_lish.cpp)
 >
 >
 
