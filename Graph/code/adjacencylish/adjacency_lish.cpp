@@ -1,6 +1,7 @@
 #include "adjacency_lish.h"
 #include <cstdio>
 #include <iostream>
+#include <queue>
 
 // 若图G中存在顶点v，则返回v在图中的位置信息，否则返回其他信息
 int LocateVex(ALGraph G, VertexType v)
@@ -50,6 +51,18 @@ void CreateUDG(ALGraph &G)
   }
 }
 
+void DestroyGraph(ALGraph &G)
+{
+  for (int i = 0; i != G.vexnum; ++i) {
+    for (ArcNode *p = G.vertices[i].firstarc; p != nullptr;
+        p = G.vertices[i].firstarc) {
+      G.vertices[i].firstarc = p->nextarc;
+      delete p;
+      p = nullptr;
+    }
+  }
+}
+
 
 void PrintAdjList(ALGraph G)
 {
@@ -61,4 +74,59 @@ void PrintAdjList(ALGraph G)
   }
 }
 
+int FirstAdjVex(ALGraph G, VertexType v)
+{
+  if (LocateVex(G, v) == -1) return -1;
+  return G.vertices[LocateVex(G, v)].firstarc->adjvex;
+}
 
+int NextAdjVex(ALGraph G, VertexType v, VertexType w)
+{
+  if (LocateVex(G, v) == -1) return -1;
+  for (ArcNode *p = G.vertices[LocateVex(G, v)].firstarc;
+      p != nullptr; p = p->nextarc)
+  {
+    if (p->adjvex == LocateVex(G, w))
+    {
+      if (p->nextarc == nullptr) return -1;
+      else return p->nextarc->adjvex;
+    }
+  }
+  return -1;
+}
+
+bool visited[MVNum];
+void BFS(ALGraph G, VertexType v)
+{
+  // 从顶点v出发，访问v并置true
+  std::cout << v << " ";
+  visited[LocateVex(G, v)] = true;
+  // 初始化队列，顶点v进队
+  std::queue<VertexType> Queue;
+  Queue.push(v);
+  // 只要队列不空
+  while (!Queue.empty())
+  {
+    VertexType u = Queue.front(); // 取得队头元素
+    Queue.pop(); // 队头元素出队
+
+    for (int w = FirstAdjVex(G, u); w >= 0;
+        w = NextAdjVex(G, u, G.vertices[w].data))
+    {
+      if (!visited[w])
+      {
+        std::cout << G.vertices[w].data << " ";
+        visited[w] = true;
+        Queue.push(G.vertices[w].data);
+      }
+    }
+  }
+}
+
+void BFSTravese(ALGraph G)
+{
+  for (int i = 0; i != G.vexnum; ++i)
+    visited[i] = false;
+  for (int i = 0; i != G.vexnum; ++i)
+    if (!visited[i]) BFS(G, G.vertices[i].data);
+}
