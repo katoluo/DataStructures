@@ -255,7 +255,7 @@
 >
 > 如下图所示：
 >
-> ![adjacency_list01.png]()
+> ![adjacency_list01.png](https://github.com/katoluo/DataStructures/raw/master/Graph/images/adjacency_list01.png)
 >
 > 具体实现：[adjacency_list.h](https://github.com/katoluo/DataStructures/blob/master/Graph/code/adjacencylish/adjacency_lish.h)
 >
@@ -340,9 +340,23 @@
 >
 >如下图所示：
 >
->![adjacency_multilist01.png]()
+>![adjacency_multilist01.png](https://github.com/katoluo/DataStructures/raw/master/Graph/images/adjacency_multilist01.png)
+>
+>具体代码实现：
+>
+>[adjacency_multilist.h](https://github.com/katoluo/DataStructures/blob/master/Graph/code/adjacencymultilist/adjacency_multilist.h)
+>
+>[adjacency_multilist.cpp](https://github.com/katoluo/DataStructures/blob/master/Graph/code/adjacencymultilist/adjacency_multilist.cpp)
 >
 >
+>
+>|              |                邻接矩阵                |              邻接表              |   十字链表   |  邻接多重表  |
+>| :----------: | :------------------------------------: | :------------------------------: | :----------: | :----------: |
+>|  空间复杂度  |                $O(V^2)$                | 无向图$O(V+2E)$；有向图$O(V+E)$  |   $O(V+E)$   |   $O(V+E$)   |
+>|   找相邻边   |   遍历对应行或列，时间复杂度为$O(V)$   | 找有向图的入边必须遍历整个邻接表 |    很方便    |    很方便    |
+>| 删除边或顶点 | 删除边很方便，删除顶点需要大量移动数据 |   无向图中删除边或顶点都不方便   |    很方便    |    很方便    |
+>|    适用于    |                 稠密图                 |           稀疏图和其他           | 只能存有向图 | 只能存无向图 |
+>|   表示方式   |                  唯一                  |              不唯一              |    不唯一    |    不唯一    |
 >
 >
 
