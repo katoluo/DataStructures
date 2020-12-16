@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <iostream>
 #include <queue>
+#include <stack>
 
 // 若图G中存在顶点v，则返回v在图中的位置信息，否则返回其他信息
 int LocateVex(ALGraph G, VertexType v)
@@ -129,4 +130,43 @@ void BFSTravese(ALGraph G)
     visited[i] = false;
   for (int i = 0; i != G.vexnum; ++i)
     if (!visited[i]) BFS(G, G.vertices[i].data);
+}
+
+void DFS(ALGraph G, VertexType v)
+{
+  // 初始化栈，顶点v进栈
+  std::stack<VertexType> stk;
+  stk.push(v);
+  // 当栈不为空
+  while (!stk.empty())
+  {
+    VertexType u = stk.top();
+    int i = LocateVex(G, u);
+    if (!visited[i]) // 没有被访问
+    {
+      std::cout << G.vertices[i].data << " ";
+      visited[i] = true;      
+    }
+    for (ArcNode *p = G.vertices[i].firstarc;
+          p != nullptr; p = p->nextarc)
+    {
+      if (!visited[p->adjvex])
+      {
+        stk.push(G.vertices[p->adjvex].data);
+        break;
+      }
+      if (p->nextarc == nullptr) stk.pop();
+    }
+  }
+  std::cout << std::endl;
+}
+
+void DFSTraverse(ALGraph G)
+{
+  for (int i = 0; i != G.vexnum; ++i)
+    visited[i] = false;
+  for (int i = 0; i != G.vexnum; ++i)
+  {
+    if (!visited[i]) DFS(G, G.vertices[i].data);
+  }
 }

@@ -39,4 +39,8 @@ int NextAdjVex(ALGraph G, VertexType v, VertexType w);
 void BFS(ALGraph G, VertexType v);
 void BFSTravese(ALGraph G); // 非连通图
 
+// 深度优先搜索遍历连通图
+void DFS(ALGraph G, VertexType v);
+void DFSTraverse(ALGraph G); // 非连通图
+
 #endif
