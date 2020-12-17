@@ -5,6 +5,6 @@ int main()
   AMGraph G;
   CreateUDN(G);
   PrintUDN(G);
-  MiniSpanTree_Prim(G, 'A');
+  MiniSpanTree_Kruskal(G);
   return 0;
 }

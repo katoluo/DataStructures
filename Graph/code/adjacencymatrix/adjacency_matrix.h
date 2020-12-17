@@ -15,5 +15,6 @@ int LocateVex(AMGraph G, VertexType v);
 void CreateUDN(AMGraph &G);
 void PrintUDN(AMGraph G);
 void MiniSpanTree_Prim(AMGraph G, VertexType u);
+void MiniSpanTree_Kruskal(AMGraph G);
 
 #endif

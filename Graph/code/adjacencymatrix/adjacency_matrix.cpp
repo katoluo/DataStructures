@@ -1,4 +1,6 @@
 #include "adjacency_matrix.h"
+#include <vector>
+#include <algorithm>
 #include <iostream>
 
 int
@@ -89,3 +91,53 @@ MiniSpanTree_Prim(AMGraph G, VertexType u)
   }
 }
 
+// 无向网G以邻接矩阵存储形式存储，构造G的最小生成树T，输出T的各条边
+// 辅助数组
+typedef struct Edge
+{
+  VertexType head; // 边的始点
+  VertexType tail; // 边的终点
+  ArcType lowcost; // 边的权值
+} Edge;
+void
+MiniSpanTree_Kruskal(AMGraph G)
+{
+  std::vector<Edge> edges; // 辅助向量
+  edges.reserve(G.arcnum); // 设置容量
+  for (int i = 0; i != G.vexnum; ++i)
+    for (int j = i + 1; j != G.vexnum; ++j)
+    {
+      if (G.arcs[i][j] != MAX_INT)
+      {
+        Edge edge = {
+          .head = G.vexs[i],
+          .tail = G.vexs[j],
+          .lowcost = G.arcs[i][j]
+        };
+        edges.push_back(edge);
+      }
+    }
+  std::sort(edges.begin(), edges.end(), 
+      [](const Edge &a, const Edge &b)
+      { return a.lowcost < b.lowcost; });
+
+  // 标识各个顶点所属的连通分量
+  int Vexset[G.vexnum];
+  for (int i = 0; i != G.vexnum; ++i)
+    Vexset[i] = i; // 表示一开始各个顶点自成一个连通分量
+
+  for (int i = 0; i != G.arcnum; ++i) // 依次查看辅助向量中的边
+  {
+    int v1 = LocateVex(G, edges[i].head); // v1为边的始点的下标
+    int v2 = LocateVex(G, edges[i].tail); // v2为边的终点的下标
+    int vs1 = Vexset[v1]; // 获取该始点的连通分量
+    int vs2 = Vexset[v2]; 
+    if (vs1 != vs2)
+    {
+      // 输出此边
+      std::cout << "(" << edges[i].head << "," << edges[i].tail << ")" << "----权值：" << edges[i].lowcost << std::endl;
+      for (int j = 0; j != G.vexnum; ++j) // 合并vs1和vs2两个分量
+        if (Vexset[j] == vs2) Vexset[j] = vs1; // 集合编号为vs2的都改为vs1
+    } // if
+  } // for
+}
