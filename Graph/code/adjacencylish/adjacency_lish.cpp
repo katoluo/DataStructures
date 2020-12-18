@@ -3,6 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include <algorithm>
 
 // 若图G中存在顶点v，则返回v在图中的位置信息，否则返回其他信息
 int LocateVex(ALGraph G, VertexType v)
@@ -168,5 +169,47 @@ void DFSTraverse(ALGraph G)
   for (int i = 0; i != G.vexnum; ++i)
   {
     if (!visited[i]) DFS(G, G.vertices[i].data);
+  }
+}
+
+
+
+/*-----------------------------------------------------最短路径问题----------------------------------------------------*/
+
+// 求顶点u到其他顶点的最短路径
+void BFS_Min_Distance(ALGraph G, VertexType u)
+{
+  // 辅助队列
+  std::queue<VertexType> q; 
+  // 辅助数组，对应顶点是否已经访问，初始化为false
+  bool visited[G.vexnum]; 
+  std::fill(visited, visited + G.vexnum, false);
+  // 顶点u到各个顶点的路径长度数组，初始化为INT_MAX
+  int distance[G.vexnum];
+  std::fill(distance, distance + G.vexnum, INT_MAX);
+  // 顶点u到自身的距离为0
+  distance[LocateVex(G, u)] = 0;
+  // 顶点u入队，并标为已访问
+  q.push(u); 
+  visited[LocateVex(G, u)] = true;
+  // BFS算法主过程
+  while (!q.empty())
+  {
+    // 得队头元素，并出队
+    VertexType v = q.front(); q.pop();
+    for (int w = FirstAdjVex(G, v); w >= 0;
+        w = NextAdjVex(G, v, G.vertices[w].data))
+      if (!visited[w])
+      {
+        distance[w] = distance[LocateVex(G, v)] + 1;
+        visited[w] = true;
+        q.push(G.vertices[w].data);
+      } // if
+  } // while
+  // 打印日志
+  for (int i = 0; i != G.vexnum; ++i)
+  {
+    std::cout << "顶点" << u << "到顶点" << G.vertices[i].data 
+      << "的路径长度为：" << distance[i] << std::endl;
   }
 }

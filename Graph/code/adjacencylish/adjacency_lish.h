@@ -3,6 +3,9 @@
 
 // 图的邻接表存储表示
 #define MVNum 10 // 最大顶点数
+#ifndef INT_MAX
+#define INT_MAX 32767
+#endif
 typedef char VertexType; // 顶点的类型
 typedef struct ArcNode // 边结点
 {
@@ -42,5 +45,9 @@ void BFSTravese(ALGraph G); // 非连通图
 // 深度优先搜索遍历连通图
 void DFS(ALGraph G, VertexType v);
 void DFSTraverse(ALGraph G); // 非连通图
+
+/* --------------------------------------------------最短路径------------------------------------------------------*/
+// 求顶点u到其他顶点的最短路径
+void BFS_Min_Distance(ALGraph G, VertexType u);
 
 #endif

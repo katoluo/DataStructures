@@ -6,7 +6,7 @@ int main()
   ALGraph G;
   CreateUDG(G);
   PrintAdjList(G);
-  DFS(G, 'A');
+  BFS_Min_Distance(G, 'A');
 
   DestroyGraph(G);
   return 0;
