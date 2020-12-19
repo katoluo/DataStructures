@@ -29,8 +29,6 @@ typedef struct
 void CreateUDG(ALGraph &G);
 void DestroyGraph(ALGraph &G);
 
-/* 这里假设图无向图，基本操作 */
-
 int LocateVex(ALGraph G, VertexType v);
 void PrintAdjList(ALGraph G);
 
@@ -47,7 +45,8 @@ void DFS(ALGraph G, VertexType v);
 void DFSTraverse(ALGraph G); // 非连通图
 
 /* --------------------------------------------------最短路径------------------------------------------------------*/
-// 求顶点u到其他顶点的最短路径
+// 利用BFS广度优先搜索算法求顶点u到其他顶点的最短路径
 void BFS_Min_Distance(ALGraph G, VertexType u);
+// 利用迪杰斯特拉算法求顶点u到其他顶点的权最短路径
 
 #endif

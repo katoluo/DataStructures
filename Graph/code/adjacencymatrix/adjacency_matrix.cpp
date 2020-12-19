@@ -4,14 +4,19 @@
 #include <iostream>
 
 int
-LocateVex(AMGraph G, VertexType v) {
+LocateVex(const AMGraph &G, VertexType v) 
+{
   for (int i = 0; i != G.vexnum; ++i)
     if (v == G.vexs[i]) return i;
   return -1;
 }
 
+/*---------------------------------------------------创建相关图或网-----------------------------------------------------*/
+
+// 创建无向网
 void
-CreateUDN(AMGraph &G) {
+CreateUDN(AMGraph &G) 
+{
   // 输入总顶点数和总边数
   std::cout << "输入总顶点数和总边数：";
   std::cin >> G.vexnum >> G.arcnum;
@@ -22,7 +27,7 @@ CreateUDN(AMGraph &G) {
   // 初始化邻接矩阵，是每个权值初始化为极大值
   for (int i = 0; i != G.vexnum; ++i)
     for (int j = 0; j != G.vexnum; ++j)
-      G.arcs[i][j] = MAX_INT;
+      G.arcs[i][j] = INT_MAX;
   /* 构造邻接矩阵。依次输入每条边依附的顶点和其权值，
    * 确定两个顶点在图中的位置之后，使相应边赋予相应的
    * 权值，同时使其对称边赋予相同的权值。
@@ -37,8 +42,41 @@ CreateUDN(AMGraph &G) {
   }
 }
 
+
+// 创建有向网
 void
-PrintUDN(AMGraph G)
+CreateDN(AMGraph &G)
+{
+  // 1. 先确定有向网的顶点数和边数
+  std::cout << "输入总顶点数和总边数：";
+  std::cin >> G.vexnum >> G.arcnum;
+  // 2. 输入顶点标识字符 如：A B 
+  std::cout << "输入顶点序列：";
+  for (int i = 0; i != G.vexnum; ++i)
+    std::cin >> G.vexs[i];
+  // 3. 初始化邻接矩阵
+  for (int i = 0; i != G.vexnum; ++i)
+    for (int j = 0; j != G.vexnum; ++j)
+      G.arcs[i][j] = INT_MAX;
+  // 4. 输入各条边的具体信息，如：A B 10；表示弧尾为A，弧头为B，权值为10
+  for (int i = 0; i != G.arcnum; ++i)
+  {
+    // 边的两个顶点
+    VertexType v1, v2; 
+    // 边的权值
+    ArcType w; 
+    // 输入边的信息
+    std::cout << "输入第" << i+1 << "边的信息：";
+    std::cin >> v1 >> v2 >> w;
+    // 求v1 v2的对应的下标
+    int j = LocateVex(G, v1);
+    int k = LocateVex(G, v2);
+    G.arcs[j][k] = w;
+  } // for
+}
+
+void
+Print(const AMGraph &G)
 {
   for (int i = 0; i != G.vexnum; ++i) {
     for (int j = 0; j != G.vexnum; ++j)
@@ -46,7 +84,9 @@ PrintUDN(AMGraph G)
     std::cout << std::endl;
   }
 }
+/*------------------------------------------------最小生成树-------------------------------------------------*/
 
+/*------------------普里姆算法-----------------*/
 typedef struct
 {
   VertexType adjvex; // 以closedge[]下标为目标顶点，在这次要连接到MST已连接的顶点所需最小权值的那个顶点
@@ -54,9 +94,9 @@ typedef struct
 }closedge[MAX_VERTEX_NUM];
 closedge close;
 int
-Min(AMGraph G, closedge close)
+Min(const AMGraph &G, closedge close)
 {
-  int min = MAX_INT;
+  int min = INT_MAX;
   int min_i = -1;
   for (int i = 0; i != G.vexnum; ++i)
   {
@@ -69,7 +109,7 @@ Min(AMGraph G, closedge close)
   return min_i;
 }
 void
-MiniSpanTree_Prim(AMGraph G, VertexType u)
+MiniSpanTree_Prim(const AMGraph &G, VertexType u)
 { // 无向网G以邻接矩阵存储形式存储，从顶点u出发构造G的最小生成树T，输出T的各条边
   int k = LocateVex(G, u); // k 为顶点u的下标
   for (int j = 0; j != G.vexnum; ++j) // 初始close数组
@@ -91,6 +131,9 @@ MiniSpanTree_Prim(AMGraph G, VertexType u)
   }
 }
 
+
+/*---------------------------------克鲁斯卡尔算法----------------------------------------*/
+
 // 无向网G以邻接矩阵存储形式存储，构造G的最小生成树T，输出T的各条边
 // 辅助数组
 typedef struct Edge
@@ -100,14 +143,14 @@ typedef struct Edge
   ArcType lowcost; // 边的权值
 } Edge;
 void
-MiniSpanTree_Kruskal(AMGraph G)
+MiniSpanTree_Kruskal(const AMGraph &G)
 {
   std::vector<Edge> edges; // 辅助向量
   edges.reserve(G.arcnum); // 设置容量
   for (int i = 0; i != G.vexnum; ++i)
     for (int j = i + 1; j != G.vexnum; ++j)
     {
-      if (G.arcs[i][j] != MAX_INT)
+      if (G.arcs[i][j] != INT_MAX)
       {
         Edge edge = {
           .head = G.vexs[i],
@@ -140,4 +183,95 @@ MiniSpanTree_Kruskal(AMGraph G)
         if (Vexset[j] == vs2) Vexset[j] = vs1; // 集合编号为vs2的都改为vs1
     } // if
   } // for
+}
+
+
+
+/*--------------------------------------------------最短路径-----------------------------------------------------*/
+
+// 迪杰斯特拉算法求有向网G的顶点到其余顶点的最短路径
+void ShortestPath_Dijkstra(const AMGraph &G, VertexType v0)
+{
+  // 算法的实现要引入以下辅助的数据结构
+
+  // 记录从源点到各个顶点是否已经被确定最短路径长度
+  bool S[G.vexnum]; 
+  // 记录源点v0到终点的vi的当前最短路径上vi的直接前驱顶点序号
+  int Path[G.vexnum];
+  // 记录从源点v0到终点vi的当前最短路径长度
+  int D[G.vexnum];
+  // 初始化
+  int v;
+  for (v = 0; v != G.vexnum; ++v)
+  {
+    // S 初始为空集
+    S[v] = false; 
+    // 将v0到各个终点的最短路径长度初始化为弧上的权值
+    D[v] = G.arcs[LocateVex(G,v0)][v];
+    // 如果v0和v之间有弧，则将v的前驱置为v0；否则为-1
+    Path[v] = D[v] < INT_MAX ? 0 : -1;
+  } // for
+  // 将v0加入S
+  S[LocateVex(G, v0)] = true;
+  // 源点到源点的距离为0
+  D[LocateVex(G, v0)] = 0;
+
+  // 初始化结束，开始主循环，每次求得v0到某个顶点v的最短路径，将v加到S集
+  for (int i = 1; i != G.vexnum; ++i)
+  {
+    int min = INT_MAX;
+    for (int w = 0; w != G.vexnum; ++w)
+      if (!S[w] && D[w] < min)
+        // 选择一条当前的最短路径，终点为v
+        { v = w; min = D[w]; } 
+    S[v] = true; // 将v加入S
+    for (int w = 0; w != G.vexnum; ++w)
+      // 更新从v0出发到集合V-S上所有顶点的最短路径长度
+      if (!S[w] && (D[v] + G.arcs[v][w] < D[w]))
+      {
+        D[w] = D[v] + G.arcs[v][w]; // 更新D[w]
+        Path[w] = v; // 更改w的前驱为v
+      } // if
+  } // for
+
+  // 打印日志
+  for (int i = 0; i != G.vexnum; ++i)
+  {
+    std::cout << "源点" << v0 << "到顶点" << G.vexs[i]
+      << "的最短路径长度为：" << D[i] << std::endl;
+  }
+  for (auto i : Path)
+    std::cout << i << " ";
+  std::cout << std::endl;
+}
+
+
+// 用Floyd算法求有向网G中各对顶点i和j之间的最短路径
+void ShortestPath_Floyd(const AMGraph &G)
+{
+  /* 算法的实现要引入以下辅助的数据结构 */
+
+  // 最短路径上顶点vj的迁移顶点的序号
+  int Path[G.vexnum][G.vexnum];
+  // 记录顶点vi和vj之间的最短路径长度
+  int D[G.vexnum][G.vexnum];
+
+  // 各对结点之间初始已知路径及距离
+  for (int i = 0; i != G.vexnum; ++i)
+    for (int j = 0; j != G.vexnum; ++j)
+    {
+      D[i][j] = G.arcs[i][j];
+      // 如果i和j之间有弧，则将j的前驱置为i
+      // 否则，置为-1
+      Path[i][j] = D[i][j] < INT_MAX ? i : -1;
+    }
+
+  for (int k = 0; k != G.vexnum; ++k)
+    for (int i = 0; i != G.vexnum; ++i)
+      for (int j = 0; j != G.vexnum; ++j)
+        if (D[i][k] + D[k][j] < D[i][j]) // 从i经k到j的一条路径更短
+        {
+          D[i][j] = D[i][k] + D[k][j]; // 更新
+          Path[i][j] = Path[k][j]; // 更改j的前驱为k
+        } // if
 }
