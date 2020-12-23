@@ -18,6 +18,7 @@ void Clear()
   while (std::getchar() != '\n');
 }
 
+/*----------------------------------------------以邻接表储方式创建相关图或网------------------------------------------------*/
 // 采用邻接表表示法创建无向图
 void CreateUDG(ALGraph &G)
 {
@@ -52,6 +53,61 @@ void CreateUDG(ALGraph &G)
     G.vertices[j].firstarc = p2;
   }
 }
+
+// 创建有向图
+void CreateDG(ALGraph &G)
+{
+  // 获取有向图的总顶点数和总边数
+  std::cout << "输入有向图的总顶点数和总边数：";
+  std::cin >> G.vexnum >> G.arcnum;
+  // 获取顶点序列
+  std::cout << "输入顶点序列：";
+  for (int i = 0; i != G.vexnum; ++i) {
+    std::cin >> G.vertices[i].data;
+    G.vertices[i].firstarc = nullptr;
+  }
+  // 输入各条边的信息
+  VertexType v1, v2;
+  for (int k = 0; k != G.arcnum; ++k) {
+    std::cout << "输入第" << k+1 << "条有向边依附的两个顶点：";
+    std::cin >> v1 >> v2;
+    int i = LocateVex(G, v1);
+    int j = LocateVex(G, v2);
+    ArcNode *p = new ArcNode;
+    p->adjvex = j;
+    p->nextarc = G.vertices[i].firstarc;
+    G.vertices[i].firstarc = p;
+  }
+}
+
+// 创建有向网
+void CreateDN(ALGraph &G)
+{
+  // 输入有向网的总顶点数和总边数
+  std::cout << "输入有向网的总顶点数和总边数：";
+  std::cin >> G.vexnum >> G.arcnum;
+  // 输入有向网的顶点序列
+  std::cout << "输入有向网的顶点序列：";
+  for (int i = 0; i != G.vexnum; ++i) {
+    std::cin >> G.vertices[i].data;
+    G.vertices[i].firstarc = nullptr;
+  }
+  // 输入各条边的信息 v1 v2 weight
+  VertexType v1, v2;
+  int weight = 0;
+  for (int k = 0; k != G.arcnum; ++k) {
+    std::cout << "输入第" << k+1 << "条弧依附的顶点和权值：";
+    std::cin >> v1 >> v2 >> weight;
+    int i = LocateVex(G, v1);
+    int j = LocateVex(G, v2);
+    ArcNode *p = new ArcNode;
+    p->weight = weight;
+    p->adjvex = j;
+    p->nextarc = G.vertices[i].firstarc;
+    G.vertices[i].firstarc = p;
+  }
+}
+
 
 void DestroyGraph(ALGraph &G)
 {
@@ -212,4 +268,115 @@ void BFS_Min_Distance(ALGraph G, VertexType u)
     std::cout << "顶点" << u << "到顶点" << G.vertices[i].data 
       << "的路径长度为：" << distance[i] << std::endl;
   }
+}
+
+
+/*--------------------------------------------------------拓扑排序----------------------------------------------------------*/
+// 算法实现要引入以下辅助的数据结构
+int indegree[MVNum] = {0}; // 存放各顶点的入度
+std::stack<VertexType> s; // 暂存所有入度为0的顶点
+VertexType topo[MVNum]; // 记录拓扑序列的顶点
+// 求出各顶点的入度存入数组indegree中
+void FindIndegree(const ALGraph &G, int indegree[])
+{
+  for (int i = 0; i != G.vexnum; ++i) {
+    for (ArcNode *p = G.vertices[i].firstarc; p != nullptr;
+        p = p->nextarc)
+      indegree[p->adjvex] = indegree[p->adjvex] + 1;
+  }
+}
+
+bool TopologicalSort(const ALGraph &G)
+{ // 有向图G采用邻接表存储结构
+  // 若G无回路，则生成G的一个拓扑序列并返回true，否则false
+  FindIndegree(G, indegree);
+  // 遍历indegree组，入度为零的顶点进栈
+  for (int i = 0; i != G.vexnum; ++i)
+    if (indegree[i] == 0) 
+      s.push(G.vertices[i].data); 
+  // 输出顶点的计数器初始为0
+  int count = 0;
+  // 栈不为空时
+  while (!s.empty()) {
+    // 取得栈顶元素并出栈
+    VertexType v = s.top(); s.pop();
+    // 将v保存在拓扑序列数组中
+    topo[count++] = v;
+    ArcNode *p = G.vertices[LocateVex(G, v)].firstarc;
+    while (p != nullptr) {
+      if (--indegree[p->adjvex] == 0)
+        s.push(G.vertices[p->adjvex].data);
+      p = p->nextarc;
+    } // while
+  } // while
+  if (count != G.vexnum) return false;
+  else return true;
+}
+
+/*-------------------------------------------------------关键路径-----------------------------------------------------------*/
+// 算法的实现要引入辅助的数据结构
+// 一维数组ve[i]:事件vi的最早发生时间
+int ve[MVNum];
+// 一维数组vl[i]:事件vi的最迟发生时间
+int vl[MVNum];
+
+bool CriticalPath(const ALGraph &G)
+{ // G为邻接表存储的有向网，输出G的各项关键活动
+  // 调用拓扑排序算法，使拓扑序列保存在topo中，若调用失败，则存在有向环，返回false
+  if (!TopologicalSort(G)) return false;
+  // 给每个事件的最早发生时间置初值0
+  for (int i = 0; i != G.vexnum; ++i) ve[i] = 0;
+/*-----------------------按拓扑次序求每个时间的最早发生时间-----------------------------*/
+  for (int i = 0; i != G.vexnum; ++i) {
+    // 取得拓扑序列中的顶点序号k
+    int k = LocateVex(G, topo[i]);
+    // p 指向k的第一个邻接顶点
+    ArcNode *p = G.vertices[k].firstarc;
+    while (p != nullptr) {
+      // 依次更新k的所有邻接顶点的最早发生时间
+      // j为邻接顶点的序号
+      int j = p->adjvex;
+      if (ve[j] < ve[k]+p->weight) ve[j]=ve[k]+p->weight;
+      p = p->nextarc; // p指向k的下一个邻接顶点
+    } // while
+  } // for
+  // 给每个事件的最迟发生时间置初值ve[G.vexnum-1]
+  for (int i = 0; i != G.vexnum; ++i)
+    vl[i] = ve[G.vexnum-1];
+/*-------------按逆拓扑次序求每个事件的最迟发生时间--------------------------------------------*/
+  for (int i = G.vexnum-1; i >= 0; --i) {
+    // 取得拓扑序列中的顶点序号k
+    int k = LocateVex(G, topo[i]);
+    ArcNode *p = G.vertices[k].firstarc;
+    while (p != nullptr) {
+      // 根据k的邻接点，更新k的最迟发生时间
+      // j为邻接顶点的序号
+      int j = p->adjvex;
+      // 更新顶点k的最迟发生时间vl[k]
+      if (vl[k] > vl[j] - p->weight)
+        vl[k] = vl[j] - p->weight;
+      // p指向k的下一个邻接顶点
+      p = p->nextarc;
+    } // while
+  } // for
+/*--------------判断每一活动是否为关键活动---------------------------------------*/
+  // 每次循环针对vi为活动开始点的所有活动
+  for (int i = 0; i != G.vexnum; ++i) {
+    // p指向i的第一个邻接顶点
+    ArcNode *p = G.vertices[i].firstarc;
+    while (p != nullptr) {
+      // j 为i的邻接顶点的序号
+      int j = p->adjvex;
+      // 计算活动<vi,vj>的最早开始时间
+      int e = ve[i]; 
+      // 计算活动<vi,vj>的最迟开始时间
+      int l = vl[j] - p->weight;
+      // 若为关键活动，则输出<vi,vj>
+      if (e == l) 
+        std::cout << G.vertices[i].data << "->"
+          << G.vertices[j].data << " 为关键活动" << std::endl;
+      p = p->nextarc;
+    } // while
+  } // for
+  return true;
 }

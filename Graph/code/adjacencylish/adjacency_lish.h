@@ -10,6 +10,7 @@ typedef char VertexType; // 顶点的类型
 typedef struct ArcNode // 边结点
 {
   int adjvex; // 该边所指向的顶点的位置，即在顶点数组中的下标
+  int weight; // 边的权值
   struct ArcNode *nextarc; // 指向下一条边的指针
   //OtherInfo info; // 和边相关的信息
 } ArcNode;
@@ -27,6 +28,8 @@ typedef struct
 } ALGraph;
 
 void CreateUDG(ALGraph &G);
+void CreateDG(ALGraph &G);
+void CreateDN(ALGraph &G);
 void DestroyGraph(ALGraph &G);
 
 int LocateVex(ALGraph G, VertexType v);
@@ -47,6 +50,11 @@ void DFSTraverse(ALGraph G); // 非连通图
 /* --------------------------------------------------最短路径------------------------------------------------------*/
 // 利用BFS广度优先搜索算法求顶点u到其他顶点的最短路径
 void BFS_Min_Distance(ALGraph G, VertexType u);
-// 利用迪杰斯特拉算法求顶点u到其他顶点的权最短路径
+
+/*---------------------------------------------------拓扑排序-------------------------------------------------------*/
+bool TopologicalSort(const ALGraph &G);
+
+// 关键路径
+bool CriticalPath(const ALGraph &G);
 
 #endif
