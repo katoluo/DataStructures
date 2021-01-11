@@ -1,0 +1,1 @@
+我是从[这里](https://github.com/kangjianwei/Data-Structure/tree/master/VisualC%2B%2B/CourseBook/0201_SqList)学习顺序表的，非常感谢。
