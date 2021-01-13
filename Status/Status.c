@@ -8,10 +8,11 @@
 // 是否使用debug模式。测试时可设置为TRUE，发布时可设置为FALSE(修改debug值后，一般需要重新生成静态库)。
 Boolean debug = TRUE;
 
-int ReadData(FILE *fp, char *format, ...)
-{
-    ;
-}
+
+
+
+
+
 
 /*
  * 摁下回车键以继续运行。
