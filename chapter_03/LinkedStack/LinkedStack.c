@@ -17,7 +17,8 @@
  *********************************************/
 Status InitStack(LinkedStack *S)
 {
-  S = NULL;
+  if (S == NULL) return ERROR;
+  *S = NULL;
   return OK;
 }
 
@@ -30,6 +31,7 @@ Status InitStack(LinkedStack *S)
  *********************************************/
 Status DestoryStack(LinkedStack *S)
 {
+  if (S == NULL) return ERROR;
   SNode *p;
   while (*S != NULL) {
     p = (*S)->next;
