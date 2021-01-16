@@ -32,9 +32,9 @@ typedef struct
 ![图3_17.png](https://github.com/katoluo/DataStructures/raw/master/chapter_03/images/%E5%9B%BE3_17.png)
 
 <center>图3.17	双栈结构的表示<center/>
+​	
+
 ​	[来自我的愚昧的答案](https://github.com/katoluo/DataStructures/tree/master/chapter_03/01)
-
-
 
 （2）回文是指正读反读均相同的字符序列,如“abba”和“abdba”均是回文,但“good”不是回文。试写一个算法判定给定的字符向量是否为回文。(提示:将一半字符入栈)
 
