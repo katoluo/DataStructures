@@ -1,4 +1,4 @@
-#include "adjacency_matrix.cpp"
+#include "adjacency_matrix.h"
 
 int main()
 {

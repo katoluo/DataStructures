@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
+/*--------------------------------------------------图的相关操作------------------------------------------------------------*/
+
 int
 LocateVex(const AMGraph &G, VertexType v) 
 {
@@ -10,6 +12,61 @@ LocateVex(const AMGraph &G, VertexType v)
     if (v == G.vexs[i]) return i;
   return -1;
 }
+
+
+void
+Print(const AMGraph &G)
+{
+  for (int i = 0; i != G.vexnum; ++i) {
+    for (int j = 0; j != G.vexnum; ++j)
+      std::cout << "|" << G.arcs[i][j] << "\t";
+    std::cout << std::endl;
+  }
+}
+
+
+bool
+InsertVex(AMGraph &G, VertexType v)
+{
+  // 判断当前顶点数是否小于最大顶点数
+  if (G.vexnum >= MAX_VERTEX_NUM) return false;
+  // 判断顶点v是否已经存在
+  if (LocateVex(G, v) >= 0) return false;
+  // 将顶点v保存到顶点表中，并将vexnum加1
+  G.vexs[G.vexnum++] = v;
+  return true;
+}
+
+
+bool
+DeleteVex(AMGraph &G, VertexType v)
+{
+  // 判断顶点v是否存在
+  int n = G.vexnum;
+  int m = LocateVex(G, v);
+  if (m < 0) return false;
+  // 将最后的顶点覆盖待删除的顶点
+  for (int i = 0; i != n; ++i) {
+    // 将待删除的顶点列用最后一个顶点列覆盖，重置最后顶点列 
+    int tmp = G.arcs[i][n-1];
+    G.arcs[i][n-1] = INT_MAX;
+    G.arcs[i][m-1] = tmp;
+  }
+  for (int i = 0; i != n; ++i) {
+    int tmp = G.arcs[n-1][i];
+    G.arcs[n-1][i] = INT_MAX;
+    G.arcs[m-1][i] = tmp;
+  }
+  // 顶点表中交换位置
+  VertexType w = G.vexs[n-1];
+  G.vexs[n-1] = G.vexs[m-1];
+  G.vexs[m-1] = w;
+  // 更改顶点数
+  --G.vexnum;
+  
+  return true;
+}
+
 
 /*---------------------------------------------------创建相关图或网-----------------------------------------------------*/
 
@@ -75,15 +132,6 @@ CreateDN(AMGraph &G)
   } // for
 }
 
-void
-Print(const AMGraph &G)
-{
-  for (int i = 0; i != G.vexnum; ++i) {
-    for (int j = 0; j != G.vexnum; ++j)
-      std::cout << "|" << G.arcs[i][j] << "\t";
-    std::cout << std::endl;
-  }
-}
 /*------------------------------------------------最小生成树-------------------------------------------------*/
 
 /*------------------普里姆算法-----------------*/
@@ -207,9 +255,10 @@ void ShortestPath_Dijkstra(const AMGraph &G, VertexType v0)
     // S 初始为空集
     S[v] = false; 
     // 将v0到各个终点的最短路径长度初始化为弧上的权值
-    D[v] = G.arcs[LocateVex(G,v0)][v];
+    int n = LocateVex(G, v0);
+    D[v] = G.arcs[n][v];
     // 如果v0和v之间有弧，则将v的前驱置为v0；否则为-1
-    Path[v] = D[v] < INT_MAX ? 0 : -1;
+    Path[v] = D[v] < INT_MAX ? n : -1;
   } // for
   // 将v0加入S
   S[LocateVex(G, v0)] = true;

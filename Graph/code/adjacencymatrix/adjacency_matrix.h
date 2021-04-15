@@ -12,9 +12,13 @@ typedef struct
   ArcType arcs[MAX_VERTEX_NUM][MAX_VERTEX_NUM]; // 邻接矩阵
   int vexnum, arcnum; // 图的当前顶点数和边数
 } AMGraph;
-int LocateVex(const AMGraph &G, VertexType v);
 void CreateUDN(AMGraph &G);
 void CreateDN(AMGraph &G);
+bool InsertVex(AMGraph &G, VertexType v);
+bool DeleteVex(AMGraph &G, VertexType v);
+bool InsertArc(AMGraph &G, VertexType v, VertexType w);
+bool DeleteArc(AMGraph &G, VertexType v, VertexType w);
+int LocateVex(const AMGraph &G, VertexType v);
 void Print(const AMGraph &G);
 void MiniSpanTree_Prim(const AMGraph &G, VertexType u);
 void MiniSpanTree_Kruskal(const AMGraph &G);
