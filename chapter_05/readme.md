@@ -74,23 +74,25 @@
 
 知识回顾与重要考点
 
-![01.png]()
+![01.png](https://github.com/katoluo/DataStructures/raw/master/chapter_05/images/01.png)
 
 
 
 #### 二叉平衡树（AVL）
 
-![02.png]()
+![02.png](https://github.com/katoluo/DataStructures/raw/master/chapter_05/images/02.png)
 
 
 
-![03.png]()
+![03.png](https://github.com/katoluo/DataStructures/raw/master/chapter_05/images/03.png)
 
 
 
 #### 哈夫曼树
 
-![04.png]()
+![04.png](https://github.com/katoluo/DataStructures/raw/master/chapter_05/images/04.png)
+
+
 
 
 

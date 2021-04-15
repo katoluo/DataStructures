@@ -1,14 +1,14 @@
 ### 折半查找的实现
 
-![01.png]()
+![01.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/01.png)
 
 
 
-![02.png]()
+![02.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/02.png)
 
 
 
-![03.png]()
+![03.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/03.png)
 
 折半查找的判定树一定是平衡二叉树
 
@@ -30,59 +30,61 @@
 
 
 
-![04.png]()
+![04.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/04.png)
 
 
 
 ### B树
 
-![05.png]()
+![05.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/05.png)
 
 
 
-![06.png]()
+![06.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/06.png)
 
 
 
-![07.png]()
+![07.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/07.png)
 
 
 
-![08.png]()
+![08.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/08.png)
 
 
 
-![09.png]()
+![09.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/09.png)
 
 
 
-![10.png]()
+![10.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/10.png)
 
 
 
-![11.png]()
+![11.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/11.png)
 
 
 
-![12.png]()
+![12.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/12.png)
 
 
 
-![13.png]()
+![13.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/13.png)
 
 
 
-![14.png]()
+![14.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/14.png)
 
 
 
 ### B+树
 
-![15.png]()
+![15.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/15.png)
 
 
 
-![16.png]()
+![16.png](https://github.com/katoluo/DataStructures/raw/master/chapter_07/images/16.png)
+
+
 
 
 
